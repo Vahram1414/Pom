@@ -1,0 +1,117 @@
+<Pl:project xmlns:Pl="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <Pl:modelVersion>4.0.0</Pl:modelVersion>
+
+  <Pl:groupId>org.example</Pl:groupId>
+  <Pl:artifactId>Reflection_Zaur</Pl:artifactId>
+  <Pl:version>1.0-SNAPSHOT</Pl:version>
+  <Pl:packaging>maven-plugin</Pl:packaging>
+
+  <Pl:name>Reflection_Zaur Maven Plugin</Pl:name>
+
+  <!-- FIXME change it to the project's website -->
+  <Pl:url>http://maven.apache.org</Pl:url>
+
+  <Pl:properties>
+    <Pl:project.build.sourceEncoding>UTF-8</Pl:project.build.sourceEncoding>
+    <Pl:maven.compiler.source>20</Pl:maven.compiler.source>
+    <Pl:maven.compiler.target>20</Pl:maven.compiler.target>
+  </Pl:properties>
+
+  <Pl:dependencies>
+    <Pl:dependency>
+      <Pl:groupId>org.apache.maven</Pl:groupId>
+      <Pl:artifactId>maven-plugin-api</Pl:artifactId>
+      <Pl:version>2.0</Pl:version>
+    </Pl:dependency>
+    <Pl:dependency>
+      <Pl:groupId>org.apache.maven.plugin-tools</Pl:groupId>
+      <Pl:artifactId>maven-plugin-annotations</Pl:artifactId>
+      <Pl:version>3.2</Pl:version>
+      <Pl:scope>provided</Pl:scope>
+    </Pl:dependency>
+    <Pl:dependency>
+      <Pl:groupId>org.codehaus.plexus</Pl:groupId>
+      <Pl:artifactId>plexus-utils</Pl:artifactId>
+      <Pl:version>3.0.8</Pl:version>
+    </Pl:dependency>
+    <Pl:dependency>
+      <Pl:groupId>junit</Pl:groupId>
+      <Pl:artifactId>junit</Pl:artifactId>
+      <Pl:version>4.8.2</Pl:version>
+      <Pl:scope>test</Pl:scope>
+    </Pl:dependency>
+  </Pl:dependencies>
+
+  <Pl:build>
+    <Pl:plugins>
+      <Pl:plugin>
+        <Pl:groupId>org.apache.maven.plugins</Pl:groupId>
+        <Pl:artifactId>maven-plugin-plugin</Pl:artifactId>
+        <Pl:version>3.2</Pl:version>
+        <Pl:configuration>
+          <Pl:goalPrefix>Reflection_Zaur</Pl:goalPrefix>
+          <Pl:skipErrorNoDescriptorsFound>true</Pl:skipErrorNoDescriptorsFound>
+        </Pl:configuration>
+        <Pl:executions>
+          <Pl:execution>
+            <Pl:id>mojo-descriptor</Pl:id>
+            <Pl:goals>
+              <Pl:goal>descriptor</Pl:goal>
+            </Pl:goals>
+          </Pl:execution>
+          <Pl:execution>
+            <Pl:id>help-goal</Pl:id>
+            <Pl:goals>
+              <Pl:goal>helpmojo</Pl:goal>
+            </Pl:goals>
+          </Pl:execution>
+        </Pl:executions>
+      </Pl:plugin>
+    </Pl:plugins>
+  </Pl:build>
+  <Pl:profiles>
+    <Pl:profile>
+      <Pl:id>run-its</Pl:id>
+      <Pl:build>
+
+        <Pl:plugins>
+          <Pl:plugin>
+            <Pl:artifactId/>
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-invoker-plugin -->
+            <dependencies>
+              <Pl:groupId>org.apache.maven.plugins</Pl:groupId>
+              <Pl:artifactId>maven-invoker-plugin</Pl:artifactId>
+              <Pl:version>3.6.0</Pl:version>
+            </dependencies>
+            <Pl:configuration>
+              <Pl:debug>true</Pl:debug>
+              <Pl:cloneProjectsTo>${project.build.directory}/it</Pl:cloneProjectsTo>
+              <Pl:pomIncludes>
+                <Pl:pomInclude>*/pom.xml</Pl:pomInclude>
+              </Pl:pomIncludes>
+              <Pl:postBuildHookScript>verify</Pl:postBuildHookScript>
+              <Pl:localRepositoryPath>${project.build.directory}/local-repo</Pl:localRepositoryPath>
+              <Pl:settingsFile>src/it/settings.xml</Pl:settingsFile>
+              <Pl:goals>
+                <Pl:goal>clean</Pl:goal>
+                <Pl:goal>test-compile</Pl:goal>
+              </Pl:goals>
+            </Pl:configuration>
+            <Pl:executions>
+              <Pl:execution>
+                <Pl:id>integration-test</Pl:id>
+                <Pl:goals>
+                  <Pl:goal>install</Pl:goal>
+                  <Pl:goal>integration-test</Pl:goal>
+                  <Pl:goal>verify</Pl:goal>
+                </Pl:goals>
+              </Pl:execution>
+            </Pl:executions>
+          </Pl:plugin>
+        </Pl:plugins>
+
+      </Pl:build>
+    </Pl:profile>
+  </Pl:profiles>
+</Pl:project>
